@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadHomepage() {
     document.body.classList.add("homepage-active");
     hadithPanel.style.display = "none";
+    storyPanel.style.display = "block";
     storyPanel.innerHTML = "";
 
     const grid = document.createElement("div");
@@ -39,7 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
       tile.classList.add("story-tile");
       tile.dataset.index = idx;
 
-      const imageSrc = `images/${story.title}.jpeg`;
+      // Normalize filename: lowercase, replace spaces with underscores
+      const safeFileName = story.title.toLowerCase().replace(/\s+/g, "_");
+      const imageSrc = `images/${safeFileName}.jpg`;
+
       tile.innerHTML = `
         <img src="${imageSrc}" alt="${story.title}" class="tile-image" onerror="this.style.display='none'">
         <h3>${story.title}</h3>
@@ -83,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentStoryIndex = index;
     document.body.classList.remove("homepage-active");
     hadithPanel.style.display = "block";
+    storyPanel.style.display = "block";
     storyPanel.innerHTML = "";
 
     const story = stories[index];
